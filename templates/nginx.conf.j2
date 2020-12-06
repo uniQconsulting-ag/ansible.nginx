@@ -6,11 +6,6 @@ pid {{ nginx_pid }};
 # Load dynamic modules. See /usr/share/nginx/README.dynamic.
 include /usr/share/nginx/modules/*.conf;
 
-{% if ansible_distribution_major_version == 7 and ansible_distribution == "CentOS" %}
-{# CentOS 7 can work with a module, CentOS 8 doesn't #}
-load_module "modules/ngx_http_geoip_module.so";
-load_module "modules/ngx_stream_geoip_module.so";
-{% endif %}
 
 events {
     worker_connections 1024;
@@ -38,44 +33,48 @@ http {
     include             /etc/nginx/mime.types;
     default_type        application/octet-stream;
 
+
+{% if nginc_geoip %}
     ###################
     #   Geo IP Maps
     ###################
-{% if ansible_distribution_major_version == 7 and ansible_distribution == "CentOS" %}
-    {# CentOS 7 can work with a module, CentOS 8 doesn't #}
-    {# This will setup geoip for the module #}
-    geoip_country {{ nginx_geoip_dat }};
-{% endif %}
 
-{% for geomap in nginx_geoip_maps %}
-    {%- if geomap.type == "allow" -%}
+    geoip2 {{ nginx_geoip_mmdb }} {
+        auto_reload 60m;
+        $geoip2_metadata_country_build metadata build_epoch;
+        $geoip2_data_country_code country iso_code;
+    }
 
-    map $geoip_country_code ${{ geomap.name }} {
+    {% for geomap in nginx_geoip_maps %}
+        {%- if geomap.type == "allow" -%}
+
+    map $geoip2_data_country_code ${{ geomap.name }} {
         default no;
 
-        {%- for country in geomap.countries -%}
+            {%- for country in geomap.countries -%}
         {{ country }} yes;
-        {% endfor %}
+            {% endfor %}
     }
-    {% else %}
+        {% else %}
 
-    map $geoip_country_code $geoipmap_{{ geomap.name }} {
+    map $geoip2_data_country_code $geoipmap_{{ geomap.name }} {
         default yes;
 
-        {%- for country in geomap.countries -%}
+            {%- for country in geomap.countries -%}
         {{ country }} no;
-        {% endfor %}
+            {% endfor %}
     }
-    {% endif %}
-{% endfor %}
+        {% endif %}
+    {% endfor %}
 
     geo $lan {
         default no;
 
-{% for item in nginx_geoip_allow %}
+    {% for item in nginx_geoip_allow %}
         {{ item }} yes;
-{% endfor %}
+    {% endfor %}
     }
+{% endif %}
 
 
 {%- if nginx_global_http_redirect -%}

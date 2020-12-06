@@ -6,15 +6,10 @@ role_include_files: # add for example requirements.yml
 - selinux
 
 # Packages
-nginx_packages:
-- nginx
+nginx_packages_centos8:
+- nginx-more
 
-nginx_packages_centos7:
-- nginx
-- nginx-module-geoip
 
-# GeoIP
-nginx_geoip_dat: /opt/geoip/geoip.dat
 
 # Log
 nginx_log_dir: /var/log/nginx
