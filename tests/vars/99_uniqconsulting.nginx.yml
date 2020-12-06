@@ -40,8 +40,8 @@ nginx_vhosts:
     # locations: []
     locations: # this is an example for a default rewrite-rule
     - path: "~ ^(.*)$"
-        custom_options:
-        - "try_files $uri $uri/ /index.php?p=$uri&$args"
+      custom_options:
+      - "try_files $uri $uri/ /index.php?p=$uri&$args"
 
 
 ##########

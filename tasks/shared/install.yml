@@ -1,8 +1,13 @@
 ---
 
+- name: import GPG keys
+  rpm_key:
+    key: "{{ nginx_aeris_key }}"
+    state: present
+
 - name: Add nginx repository
   yum:
-    name: https://repo.aerisnetwork.com/pub/aeris-release-8.rpm
+    name: "{{ nginx_aeris_repo }}"
   when: not nginx_udpate_only
 
 - name: install packages
@@ -13,3 +18,4 @@
   notify: restart nginx
 
 ...
+
