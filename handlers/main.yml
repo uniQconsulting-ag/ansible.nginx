@@ -8,9 +8,9 @@
     name: nginx
     state: restarted
 
-- name: restart iptables
+- name: reload nginx
   service:
-    name: iptables
-    state: restarted
+    name: nginx
+    state: reloaded
 
 ...

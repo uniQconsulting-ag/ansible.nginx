@@ -1,0 +1,19 @@
+---
+
+- name: Add nginx repository
+  yum_repository:
+    name: nginx-stable
+    description: nginx stable repo
+    baseurl: http://nginx.org/packages/centos/$releasever/$basearch/
+    gpgkey: https://nginx.org/keys/nginx_signing.key
+    enabled: yes
+  when: not nginx_udpate_only
+
+- name: install packages
+  yum:
+    name: "{{ nginx_packages }}" 
+    state: present
+  when: not nginx_udpate_only
+  notify: restart nginx
+
+...

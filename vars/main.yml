@@ -1,23 +1,30 @@
 ---
-# Here belong all variables, that can be changed by a vars-file,
-# a playbook or a include.
-
-# Systemcheck
-systemcheck_physical_memory: 2048 # In MB
-systemcheck_swap_memory: 1024 # In MB
-systemcheck_disk: "{{ 20 * 1073741824‬ }}" # in bytes ; 20G
-systemcheck_cpus: 2
-
 # Role
-role_include_files: [] # add for example requirements.yml
+role_include_files: # add for example requirements.yml
+- install
+- config
+- selinux
 
-# Firewall
-role_ports:
-- port: 22
-  protocol: tcp
-- port: 80
-  protocol: tcp
-- port: 443
-  protocol: tcp
+# Packages
+nginx_packages:
+- nginx
+
+nginx_packages_centos7:
+- nginx
+- nginx-module-geoip
+
+# GeoIP
+nginx_geoip_dat: /opt/geoip/geoip.dat
+
+# Log
+nginx_log_dir: /var/log/nginx
+nginx_access_log: "{{ nginx_log_dir }}/access.log"
+nginx_error_log: "{{ nginx_log_dir }}/error.log"
+
+# Nginx
+nginx_user: nginx
+nginx_pid: /run/nginx.pid
+nginx_php_socket_dir: /run/php
+nginx_config_dir: /etc/nginx/conf.d
 
 ...

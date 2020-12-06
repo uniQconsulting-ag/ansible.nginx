@@ -1,0 +1,9 @@
+#!/usr/bin/ansible-playbook 
+---
+- name: Generate Nginx Config
+  hosts: localhost
+  vars:
+    nginx_update_only: true
+  roles:
+    - uniqconsulting.nginx
+...

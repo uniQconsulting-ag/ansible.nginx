@@ -1,0 +1,45 @@
+---
+
+- name: generate nginx config file
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: reload nginx
+
+- name: check ssl cert directory
+  file:
+    path: "{{ nginx_ssl_cert | dirname }}"
+    state: directory
+    chmod: 0640
+  when: not nginx_udpate_only
+
+- name: Create cert if missing
+  shell:
+    cmd: test -f {{ nginx_ssl_cert }} || openssl req -x509 -nodes -subj "/C=CH/ST=ZH/O=IT/CN={{ ansible_fqdn }}" -newkey rsa:4096 -keyout {{ nginx_ssl_key }} -out {{ nginx_ssl_cert }} -days 365
+    creates: "{{ nginx_ssl_cert }}"
+  when: not nginx_udpate_only
+  notify: restart nginx
+
+- name: generate nginx vhosts file (proxy)
+  template:
+    src: vhost_proxy.conf.j2
+    dest: "{{ nginx_config_dir }}/{{ item.server_name | first }}.conf"
+  with_items: "{{ nginx_vhosts }}"
+  when: "{{ item.type == 'proxy' }}"
+  notify: reload nginx
+
+- name: generate nginx vhosts file (web)
+  template:
+    src: vhost_web.conf.j2
+    dest: "{{ nginx_config_dir }}/{{ item.server_name | first }}.conf"
+  with_items: "{{ nginx_vhosts }}"
+  when: "{{ item.type == 'web' }}"
+  notify: reload nginx
+
+- name: enable nginx service
+  service:
+    name: nginx
+    enabled: yes
+  notify: restart nginx
+
+...

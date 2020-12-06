@@ -1,0 +1,75 @@
+---
+
+##########
+#  Vhosts
+##########
+
+# Hosts
+nginx_vhosts:
+
+  ### Reverse Proxies ###
+
+  # This is the minimal required:
+  - server_name:
+    - example.org
+    type: proxy
+    locations:
+    - path: /
+      pass: https://10.0.0.2:443
+
+  - server_name:
+    - cloud.example.org
+    - cloud.*
+    type: proxy
+    default: yes # Only use once!
+    ssl_certificate: /some/other/cert.pem # default is {{ nginx_ssl_cert }}
+    ssl_certificate_key: /some/other/key.pem # default is {{ nginx_ssl_key }}
+    locations:
+    - path: /
+      pass: https://10.10.0.7:443
+      custom_options:
+      - proxy_cookie_path / /
+      - sub_filter ="/ ="/
+
+  ### Web-Hosts ###
+  - server_name:
+    - www.example.org
+    type: web
+    php_version: 73
+    # document_root: /some/other/path # default is /srv/www/www.example.org/www
+    # locations: []
+    locations: # this is an example for a default rewrite-rule
+    - path: "~ ^(.*)$"
+        custom_options:
+        - "try_files $uri $uri/ /index.php?p=$uri&$args"
+
+
+##########
+#  GeoIP
+##########
+
+# Geo IP
+# nginx_geoip_allow:
+# - 10.10.0.0/16
+# - 123.45.6.78/32
+# nginx_geoip_maps:
+# - name: west_europe
+#   type: allow
+#   countries:
+#   - DE
+#   - CH
+#   - LI
+#   - FR
+#   - AT
+# - name: public
+#   type: deny
+#   countries:
+#   - RU
+#   - CN
+  
+# Settings
+# nginx_ssl_cert: /opt/letsencrypt/cert.pem
+# nginx_ssl_key: /opt/letsencrypt/key.pem
+# nginx_selinux: no
+
+...
