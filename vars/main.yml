@@ -1,9 +1,9 @@
 ---
 # Role
 role_include_files: # add for example requirements.yml
-- install
-- config
-- selinux
+- install.yml
+- config.yml
+- selinux.yml
 
 # Packages
 nginx_packages_centos8:
