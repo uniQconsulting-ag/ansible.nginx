@@ -74,7 +74,7 @@
       checkmodule -M -m -o /tmp/uniq_nginx_fix.mod /tmp/uniq_nginx_fix.te
       semodule_package -o /tmp/uniq_nginx_fix.pp -m /tmp/uniq_nginx_fix.mod
       semodule -i /tmp/uniq_nginx_fix.pp
-    changed: no
+    changed_when: no
 
   when: nginx_selinux
 
