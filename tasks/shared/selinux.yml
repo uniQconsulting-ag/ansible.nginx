@@ -3,37 +3,41 @@
 - block:
 
   - name: set fcontext for {{ nginx_ssl_cert | dirname }}
-    community.general.sefcontext:
+    sefcontext:
       target: "{{ nginx_ssl_cert  | dirname }}(/.*)?"
       setype: cert_t
       state: present
     when: not nginx_udpate_only
 
   - name: apply fcontext to {{ nginx_ssl_cert | dirname }}
-    ansible.builtin.command: restorecon -irv {{ nginx_ssl_cert  | dirname }}
+    shell: restorecon -irv {{ nginx_ssl_cert  | dirname }}
+    register: restorecon_res
+    changed_when: restorecon_res.stdout != ""
     when: not nginx_udpate_only
 
 
 
   - name: set fcontext for {{ nginx_default_document_root }}/www
-    community.general.sefcontext:
+    sefcontext:
       target: "{{ nginx_default_document_root }}(/.*)?/www(/.*)?"
       setype: httpd_sys_script_exec_t
       state: present
 
   - name: set fcontext for {{ nginx_default_document_root }}/logs
-    community.general.sefcontext:
+    sefcontext:
       target: "{{ nginx_default_document_root }}(/.*)?/logs(/.*)?"
       setype: httpd_log_t
       state: present
 
   - name: apply fcontext to {{ nginx_default_document_root }}/www
-    ansible.builtin.command: restorecon -irv {{ nginx_default_document_root }}
+    shell: restorecon -irv {{ nginx_default_document_root }}
+    register: restorecon_res
+    changed_when: restorecon_res.stdout != ""
 
 
 
   - name: set fcontext for vhosts (web) with specified documentroot
-    community.general.sefcontext:
+    sefcontext:
       target: "{{ item.documentroot }}(/.*)?"
       setype: httpd_sys_script_exec_t
       state: present
@@ -41,7 +45,9 @@
     when: item.type == 'web' and item.documentroot is defined
     
   - name: set fcontext for vhosts (web) with specified documentroot
-    ansible.builtin.command: restorecon -irv {{ item.documentroot }}
+    shell: restorecon -irv {{ item.documentroot }}
+    register: restorecon_res
+    changed_when: restorecon_res.stdout != ""
     with_items: "{{ nginx_vhosts }}"
     when: item.type == 'web' and item.documentroot is defined
 
