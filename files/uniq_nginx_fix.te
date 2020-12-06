@@ -1,0 +1,16 @@
+module uniq_nginx_fix 1.0;
+
+require {
+        type ld_so_cache_t;
+        type httpd_t;
+        type sssd_public_t;
+        class process execmem;
+        class file execute;
+}
+
+#============= httpd_t ==============
+allow httpd_t ld_so_cache_t:file execute;
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t self:process execmem;
+allow httpd_t sssd_public_t:file execute;

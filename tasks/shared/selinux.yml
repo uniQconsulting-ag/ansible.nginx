@@ -61,6 +61,20 @@
     - httpd_can_network_connect
     - httpd_can_connect_ldap
     - httpd_can_sendmail
+    - httpd_execmem
+    - httpd_can_network_relay 
+
+  - name: copy custom selinux module
+    file:
+      src: uniq_nginx_fix.te
+      dest: /tmp/uniq_nginx_fix.te
+
+  - name: compile & activate custom selinux module
+    shell: |
+      checkmodule -M -m -o /tmp/uniq_nginx_fix.mod /tmp/uniq_nginx_fix.te
+      semodule_package -o /tmp/uniq_nginx_fix.pp -m /tmp/uniq_nginx_fix.mod
+      semodule -i /tmp/uniq_nginx_fix.pp
+    changed: no
 
   when: nginx_selinux
 
