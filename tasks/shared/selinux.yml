@@ -65,11 +65,11 @@
     - httpd_can_network_relay 
 
   - name: copy custom selinux module
-    file:
+    copy:
       src: uniq_nginx_fix.te
       dest: /tmp/uniq_nginx_fix.te
 
-  - name: compile & activate custom selinux module
+  - name: compile and activate custom selinux module
     shell: |
       checkmodule -M -m -o /tmp/uniq_nginx_fix.mod /tmp/uniq_nginx_fix.te
       semodule_package -o /tmp/uniq_nginx_fix.pp -m /tmp/uniq_nginx_fix.mod
