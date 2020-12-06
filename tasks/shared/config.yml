@@ -10,7 +10,7 @@
   file:
     path: "{{ nginx_ssl_cert | dirname }}"
     state: directory
-    chmod: 0640
+    mode: 0640
   when: not nginx_udpate_only
 
 - name: Create cert if missing
