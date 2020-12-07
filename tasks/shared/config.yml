@@ -40,7 +40,6 @@
   service:
     name: nginx
     enabled: yes
-    state: started
   notify: restart nginx
 
 ...
