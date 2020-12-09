@@ -4,7 +4,10 @@ server {
     # vHost Settings
     ###################
 
-    listen          {{ item.port if item.port is defined else '443' }} ssl{% if item.no_http2 is defined %}{{ ' http2' if not item.no_http2 else "" }}{% endif %}{% if item.default is defined %}{{ ' default_server' if item.default }}{% endif %} ;
+    listen          {{ item.port if item.port is defined else '443' }} 
+                    ssl
+                    {% if item.no_http2 is defined %}{{ ' http2' if not item.no_http2 else "" }}{% endif %}
+                    {% if item.default is defined %}{{ ' default_server' if item.default else '' }}{% endif %} ;
 {% for sname in item.server_name %}
     server_name     {{ sname }};
 {% endfor %}
