@@ -63,6 +63,7 @@
     - httpd_can_sendmail
     - httpd_execmem
     - httpd_can_network_relay 
+    when: not nginx_udpate_only
 
   - name: copy custom selinux module
     copy:
@@ -75,6 +76,9 @@
       semodule_package -o /tmp/uniq_nginx_fix.pp -m /tmp/uniq_nginx_fix.mod
       semodule -i /tmp/uniq_nginx_fix.pp
     changed_when: no
+    when: not nginx_udpate_only
+    args:
+      creates: /tmp/uniq_nginx_fix.pp
 
   when: nginx_selinux
 
