@@ -19,13 +19,13 @@
     path: "{{ nginx_ssl_cert | dirname }}"
     state: directory
     mode: 0640
-  when: not nginx_udpate_only
+  when: not nginx_update_only
 
 - name: Create cert if missing
   shell:
     cmd: test -f {{ nginx_ssl_cert }} || openssl req -x509 -nodes -subj "/C=CH/ST=ZH/O=IT/CN={{ ansible_fqdn }}" -newkey rsa:4096 -keyout {{ nginx_ssl_key }} -out {{ nginx_ssl_cert }} -days 365
     creates: "{{ nginx_ssl_cert }}"
-  when: not nginx_udpate_only
+  when: not nginx_update_only
   notify: restart nginx
 
 - name: generate nginx vhosts file (proxy)

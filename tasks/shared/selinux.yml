@@ -7,13 +7,13 @@
       target: "{{ nginx_ssl_cert  | dirname }}(/.*)?"
       setype: cert_t
       state: present
-    when: not nginx_udpate_only
+    when: not nginx_update_only
 
   - name: apply fcontext to {{ nginx_ssl_cert | dirname }}
     shell: restorecon -irv {{ nginx_ssl_cert  | dirname }}
     register: restorecon_res
     changed_when: restorecon_res.stdout != ""
-    when: not nginx_udpate_only
+    when: not nginx_update_only
 
 
 
@@ -63,7 +63,7 @@
     - httpd_can_sendmail
     - httpd_execmem
     - httpd_can_network_relay 
-    when: not nginx_udpate_only
+    when: not nginx_update_only
 
   - name: copy custom selinux module
     copy:
@@ -76,7 +76,7 @@
       semodule_package -o /tmp/uniq_nginx_fix.pp -m /tmp/uniq_nginx_fix.mod
       semodule -i /tmp/uniq_nginx_fix.pp
     changed_when: no
-    when: not nginx_udpate_only
+    when: not nginx_update_only
     args:
       creates: /tmp/uniq_nginx_fix.pp
 

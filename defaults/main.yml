@@ -17,7 +17,7 @@ nginx_geoip_allow:
 nginx_maxmind_license_key: ""
 
 # Misc
-nginx_udpate_only: no
+nginx_update_only: no
 nginx_selinux: yes
 
 ...

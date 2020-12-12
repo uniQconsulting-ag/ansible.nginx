@@ -8,13 +8,13 @@
 - name: Add nginx repository
   yum:
     name: "{{ nginx_aeris_repo }}"
-  when: not nginx_udpate_only
+  when: not nginx_update_only
 
 - name: install packages
   yum:
     name: "{{ nginx_packages }}" 
     state: present
-  when: not nginx_udpate_only
+  when: not nginx_update_only
   notify: restart nginx
 
 ...
