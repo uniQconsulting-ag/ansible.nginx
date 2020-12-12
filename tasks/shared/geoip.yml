@@ -4,7 +4,7 @@
  
   - name: generate update-script
     template:
-      src: geoip-ngin-update.j2
+      src: geoip-nginx-update.j2
       dest: "{{ nginx_geoip_update_script }}"
       owner: root
       group: root

@@ -25,6 +25,6 @@ nginx_php_socket_dir: /run/php
 nginx_config_dir: /etc/nginx/conf.d
 
 # geoip
-nginx_geoip_update_script: /usr/bin/geoip-ngin-update
+nginx_geoip_update_script: /usr/bin/geoip-nginx-update
 
 ...
