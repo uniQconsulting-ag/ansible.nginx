@@ -1,0 +1,27 @@
+---
+
+- block:
+ 
+  - name: generate update-script
+    template:
+      src: geoip-ngin-update.j2
+      dest: "{{ nginx_geoip_update_script }}"
+      owner: root
+      group: root
+      mode: '0750'
+    when: not nginx_update_only
+
+  - name: run update-script
+    shell: "bash {{ nginx_geoip_update_script }}"
+    changed_when: no
+
+  - name: update cronjob for update-task
+    cron:
+      name: "nginx-geoip-update"
+      minute: "17"
+      hour: "1"
+      weekday: "0"
+      job: "{{ nginx_geoip_update_script }} > /dev/null"
+
+  when: nginc_geoip
+...

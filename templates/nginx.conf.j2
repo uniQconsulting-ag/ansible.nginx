@@ -96,7 +96,7 @@ http {
     #   Geo IP Maps
     ###################
 
-    geoip2 {{ nginx_geoip_mmdb }} {
+    geoip2 /opt/geoip/maxmind/GeoLite2-City.mmdb {
         auto_reload 60m;
         $geoip2_metadata_country_build metadata build_epoch;
         $geoip2_data_country_code country iso_code;

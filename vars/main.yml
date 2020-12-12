@@ -2,6 +2,7 @@
 # Role
 role_include_files: # add for example requirements.yml
 - install.yml
+- geoip.yml
 - config.yml
 - selinux.yml
 
@@ -22,5 +23,8 @@ nginx_user: nginx
 nginx_pid: /run/nginx.pid
 nginx_php_socket_dir: /run/php
 nginx_config_dir: /etc/nginx/conf.d
+
+# geoip
+nginx_geoip_update_script: /usr/bin/geoip-ngin-update
 
 ...

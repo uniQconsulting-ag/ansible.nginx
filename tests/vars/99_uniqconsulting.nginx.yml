@@ -67,6 +67,7 @@ nginx_vhosts:
 #   countries:
 #   - RU
 #   - CN
+# nginx_maxmind_license_key: "YOUR_LICENSE_KEY"
   
 # Settings
 # nginx_ssl_cert: /opt/letsencrypt/cert.pem
