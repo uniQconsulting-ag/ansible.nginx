@@ -24,6 +24,7 @@ nginx_vhosts:
     default: yes # Only use once!
     ssl_certificate: /some/other/cert.pem # default is {{ nginx_ssl_cert }}
     ssl_certificate_key: /some/other/key.pem # default is {{ nginx_ssl_key }}
+    # geoip_map: west_europe
     locations:
     - path: /
       pass: https://10.10.0.7:443
