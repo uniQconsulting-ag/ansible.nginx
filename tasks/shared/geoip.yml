@@ -23,5 +23,5 @@
       weekday: "0"
       job: "{{ nginx_geoip_update_script }} > /dev/null"
 
-  when: nginc_geoip
+  when: nginx_geoip
 ...
