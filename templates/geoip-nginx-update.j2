@@ -8,7 +8,7 @@ LICENSE_KEY="{{ nginx_maxmind_license_key }}"
 mkdir -p /opt/geoip/maxmind/
 
 mkdir -p /tmp/maxmind 
-wget -O /tmp/maxmind.tar.gz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$LICENSE_KEY&suffix=tar.gz"
+wget -q -O /tmp/maxmind.tar.gz "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$LICENSE_KEY&suffix=tar.gz"
 tar -xzf /tmp/maxmind.tar.gz --directory /tmp/maxmind --strip-components 1
 mv /tmp/maxmind/GeoLite2-City.mmdb /opt/geoip/maxmind/GeoLite2-City.mmdb
 rm -rf /tmp/maxmind
