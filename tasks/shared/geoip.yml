@@ -10,10 +10,7 @@
       group: root
       mode: '0750'
     when: not nginx_update_only
-
-  - name: run update-script
-    shell: "bash {{ nginx_geoip_update_script }}"
-    changed_when: no
+    notify: update geoip
 
   - name: update cronjob for update-task
     cron:
