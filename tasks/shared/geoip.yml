@@ -20,5 +20,11 @@
       weekday: "0"
       job: "{{ nginx_geoip_update_script }} > /dev/null"
 
+
+  - name: run geoip update task
+    shell: bash {{ nginx_geoip_update_script }}
+    when: not nginx_update_only
+    notify: update geoip
+
   when: nginx_geoip
 ...

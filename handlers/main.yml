@@ -4,10 +4,6 @@
 # if a change on a task was made
 
 
-- name: update geoip
-  shell: "bash {{ nginx_geoip_update_script }}"
-
-
 - name: restart nginx
   service:
     name: nginx
