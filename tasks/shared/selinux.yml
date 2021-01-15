@@ -7,14 +7,13 @@
       target: "/opt/geoip/maxmind(/.*)?"
       setype: usr_t
       state: present
-    when: not nginx_update_only
+    when: not nginx_update_only and nginx_geoip
 
   - name: apply fcontext to /opt/geoip/maxmind
     shell: restorecon -irv /opt/geoip/maxmind
     register: restorecon_res
     changed_when: restorecon_res.stdout != ""
-    when: not nginx_update_only
-
+    when: not nginx_update_only and nginx_geoip
 
 
 
