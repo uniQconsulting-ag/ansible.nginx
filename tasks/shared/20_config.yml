@@ -1,13 +1,5 @@
 ---
 
-- name: cleanup nginx-more
-  shell: |
-    mkdir /etc/nginx/conf.d/_base
-    mv /etc/nginx/conf.d/custom/blacklist.conf /etc/nginx/conf.d/_base/blacklist.conf
-    rm -rf /etc/nginx/conf.d/custom
-    rm -rf /etc/nginx/conf.d/vhosts
-  changed_when: no
-
 - name: generate nginx config file
   template:
     src: nginx.conf.j2

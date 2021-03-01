@@ -49,26 +49,11 @@ server {
     add_header X-XSS-Protection "1; mode=block";
 
 
-
-    {% if item.geoip_map is defined %}
-    ###################
-    #     GeoIP
-    ###################
-
-    if ($lan = yes) {
-        set $geoipmap_{{ item.geoip_map }} yes;
-    }
-
-    if ($geoipmap_{{ item.geoip_map }} = no) {
-        return 403;
-    }
-    {% endif %}
-
-
     ###################
     #    Locations
     ###################
 
+    {% if(item.setup_php) %}
     # PHP Files
     location ~* \.php$ {
         fastcgi_pass    unix:{{ nginx_php_socket_dir }}/php{{ item.php_version }}-fpm.socket;
@@ -76,6 +61,7 @@ server {
         fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
         fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
     }
+    {% endif %}
 
     {% for location in item.locations %}
     location {{ location.path }} {

@@ -41,21 +41,6 @@ server {
     add_header X-Content-Type-Options nosniff;
     add_header X-XSS-Protection "1; mode=block";
 
-    {% if item.geoip_map is defined %}
-    ###################
-    #     GeoIP
-    ###################
-
-    if ($lan = yes) {
-        set $geoipmap_{{ item.geoip_map }} yes;
-    }
-
-    if ($geoipmap_{{ item.geoip_map }} = no) {
-        return 403;
-    }
-    {% endif %}
-
-
     ###################
     #    Locations
     ###################

@@ -1,15 +1,5 @@
 ---
 
-- name: import GPG keys
-  rpm_key:
-    key: "{{ nginx_aeris_key }}"
-    state: present
-
-- name: Add nginx repository
-  yum:
-    name: "{{ nginx_aeris_repo }}"
-  when: not nginx_update_only
-
 - name: install packages
   yum:
     name: "{{ nginx_packages }}" 

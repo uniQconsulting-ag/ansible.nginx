@@ -1,0 +1,16 @@
+---
+
+- name: download dependencies from galaxy
+  shell: ansible-galaxy install uniqconsulting.firewall
+    
+- name: open default ports
+  include_role:
+    name: uniqconsulting.firewall
+  vars:
+    firewall_open_ports:
+    - port: 443
+      protocol: tcp
+    - port: 80
+      protocol: tcp
+
+...
