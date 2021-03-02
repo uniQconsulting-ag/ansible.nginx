@@ -1,7 +1,7 @@
 ---
 
 - name: disable php 7.2
-  shell: dnf module disable php:7.2
+  shell: dnf module disable -y -q php:7.2
   changed_when: false
 
 - name: install packages
