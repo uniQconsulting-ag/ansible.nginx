@@ -7,15 +7,6 @@ nginx_ssl_key: /etc/nginx/ssl/key.pem
 nginx_default_document_root: /srv/www
 nginx_max_body_size: 4G
 
-# GeoIP
-nginx_geoip: no
-nginx_geoip_maps: []
-nginx_geoip_allow:
-- 10.0.0.0/8
-- 172.16.0.0/12
-- 192.168.0.0/16
-nginx_maxmind_license_key: ""
-
 # Misc
 nginx_update_only: no
 nginx_selinux: yes

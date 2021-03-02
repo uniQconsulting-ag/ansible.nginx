@@ -2,10 +2,8 @@
 
 # Packages
 nginx_packages:
-- nginx-more
-nginx_aeris_key: https://repo.aerisnetwork.com/pub/RPM-GPG-KEY-AERIS
-nginx_aeris_repo: https://repo.aerisnetwork.com/pub/aeris-release-8.rpm
-
+- "python3-policycoreutils"
+- "@nginx:1.18"
 
 # Log
 nginx_log_dir: /var/log/nginx

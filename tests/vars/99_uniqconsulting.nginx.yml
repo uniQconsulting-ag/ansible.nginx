@@ -36,6 +36,7 @@ nginx_vhosts:
   - server_name:
     - www.example.org
     type: web
+    setup_php: yes # is default
     php_version: 73
     # document_root: /some/other/path # default is /srv/www/www.example.org/www
     # locations: []
@@ -44,32 +45,6 @@ nginx_vhosts:
       custom_options:
       - "try_files $uri $uri/ /index.php?p=$uri&$args"
 
-
-##########
-#  GeoIP
-##########
-
-# Geo IP
-# nginx_geoip: yes
-# nginx_geoip_allow:
-# - 10.10.0.0/16
-# - 123.45.6.78/32
-# nginx_geoip_maps:
-# - name: west_europe
-#   type: allow
-#   countries:
-#   - DE
-#   - CH
-#   - LI
-#   - FR
-#   - AT
-# - name: public
-#   type: deny
-#   countries:
-#   - RU
-#   - CN
-# nginx_maxmind_license_key: "YOUR_LICENSE_KEY"
-  
 # Settings
 # nginx_ssl_cert: /opt/letsencrypt/cert.pem
 # nginx_ssl_key: /opt/letsencrypt/key.pem

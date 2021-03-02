@@ -5,7 +5,7 @@ galaxy_info:
   company: uniqconsulting
   role_name: nginx
   description: Installs/Configures Nginx for Webserver & Proxy use
-  min_ansible_version: 2.4
+  min_ansible_version: 2.9
   license: GPLv3
   platforms:
   - name: EL
