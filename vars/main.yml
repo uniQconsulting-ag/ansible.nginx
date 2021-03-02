@@ -2,6 +2,7 @@
 
 # Packages
 nginx_packages:
+- "python3-policycoreutils"
 - "@nginx:1.18"
 
 # Log

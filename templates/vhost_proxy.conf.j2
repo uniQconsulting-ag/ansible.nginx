@@ -16,9 +16,6 @@ server {
     access_log {{ nginx_log_dir }}/{{ item.server_name | first }}_access.log;
     error_log {{ nginx_log_dir }}/{{ item.server_name | first }}_error.log error;
 
-    # Check for bots
-    if ($bad_bot) { return 444; }
-
     ###################
     #  SSL Settings
     ###################
