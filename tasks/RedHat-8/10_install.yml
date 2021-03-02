@@ -1,0 +1,15 @@
+---
+
+- name: disable php 7.2
+  shell: dnf module disable php:7.2
+  changed_when: false
+
+- name: install packages
+  yum:
+    name: "{{ nginx_packages }}" 
+    state: present
+  when: not nginx_update_only
+  notify: restart nginx
+
+...
+

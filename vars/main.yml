@@ -2,7 +2,7 @@
 
 # Packages
 nginx_packages:
-- @nginx:1.18
+- "@nginx:1.18"
 
 # Log
 nginx_log_dir: /var/log/nginx
